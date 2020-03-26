@@ -21,9 +21,10 @@ from rest_framework_simplejwt import views as jwt_views
 
 urlpatterns = [
     path('', admin.site.urls),
-    path('api/docs/', include_docs_urls(title='My API title', public=False, permission_classes=[])),
+    path('api/docs/', include_docs_urls(title='API Docs', public=False, permission_classes=[])),
     path('api/token/', jwt_views.TokenObtainPairView.as_view()),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view()),
     path('api/token/verify/', jwt_views.TokenVerifyView.as_view()),
     path('backend/api/social/', include('app.post.urls')),
+    path('backend/api/users/', include('app.users.urls'))
 ]

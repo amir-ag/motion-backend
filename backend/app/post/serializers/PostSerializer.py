@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from app.post.models import Post
+from app.post.models import posts
 from app.users.serializers import UserSerializer
 
 
@@ -13,5 +13,5 @@ class PostSerializer(serializers.ModelSerializer):
         return post.likes.all().count()
 
     class Meta:
-        model = Post
+        model = posts
         fields = "__all__"

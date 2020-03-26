@@ -58,3 +58,9 @@ class GetPostsofFollowing(ListCreate):
     def get_queryset(self):
         followed_user_ids = self.request.user.followees.all().values_list("id", flat=True)
         return Post.objects.filter(author__in=followed_user_ids)
+
+
+class ListCreateComments(ListCreateAPIView):
+    serializer_class = PostSerializer
+    queryset = Post.objects.all()
+    lookup_url_kwarg = 'post_id'

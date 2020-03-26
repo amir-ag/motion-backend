@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.urls import path
 
-from app.post.views import ListCreate, RetrieveUpdateDestroy, ToggleLike, UserLikedPosts, PostsByUser, \
-    GetPostsofFollowing
+from app.post.views.post import ListCreate, RetrieveUpdateDestroy, ToggleLike, UserLikedPosts, PostsByUser, \
+    GetPostsofFollowing, ListCreateComments
 from app.users.views import GetAllUsers, FollowToggle, ListFollowers, ListFollowees
+
+app_label = 'post'
 
 urlpatterns = [
     path('posts/', ListCreate.as_view()),
@@ -26,6 +28,9 @@ urlpatterns = [
     path('posts/likes/', UserLikedPosts.as_view()),
     path('posts/following/', GetPostsofFollowing.as_view()),
     path('posts/user/<int:user_id>', PostsByUser.as_view()),
+
+    path('comments/<int:post_id>/', ListCreateComments.as_view()),
+
     path('users/', GetAllUsers.as_view()),
     path('followers/toggle-follow/<int:user_id>/', FollowToggle.as_view()),
     path('followers/followers/', ListFollowers.as_view()),
