@@ -8,10 +8,10 @@ class PostSerializer(serializers.ModelSerializer):
     author = UserSerializer(read_only=True)
     amount_of_likes = serializers.SerializerMethodField()
 
+    @staticmethod
     def get_amount_of_likes(self, post):
         return post.likes.all().count()
 
     class Meta:
         model = Post
         fields = "__all__"
-        # depth = 1
