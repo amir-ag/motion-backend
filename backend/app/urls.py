@@ -25,6 +25,6 @@ urlpatterns = [
     path('api/token/', jwt_views.TokenObtainPairView.as_view()),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view()),
     path('api/token/verify/', jwt_views.TokenVerifyView.as_view()),
-    path('backend/api/social/', include('app.post.urls')),
+    path('backend/api/social/', include('app.social.urls')),
     path('backend/api/users/', include('app.users.urls'))
 ]

@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from app.post.models.posts import Post
+from app.social.models.posts import Post
 
 User = get_user_model()
 

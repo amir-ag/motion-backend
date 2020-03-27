@@ -15,8 +15,9 @@ Including another URLconf
 """
 from django.urls import path
 
-from app.post.views.post import ListCreate, RetrieveUpdateDestroy, ToggleLike, UserLikedPosts, PostsByUser, \
-    GetPostsofFollowing, ListCreateComments
+from app.social.views.friend import CreateFriendRequest, GetFriendRequest
+from app.social.views.post import ListCreate, RetrieveUpdateDestroy, ToggleLike, UserLikedPosts, PostsByUser, \
+    GetPostsOfFollowing, ListCreateComments
 from app.users.views import GetAllUsers, FollowToggle, ListFollowers, ListFollowees
 
 app_label = 'post'
@@ -26,7 +27,7 @@ urlpatterns = [
     path('posts/<int:post_id>/', RetrieveUpdateDestroy.as_view()),
     path('posts/toggle-like/<int:post_id>/', ToggleLike.as_view()),
     path('posts/likes/', UserLikedPosts.as_view()),
-    path('posts/following/', GetPostsofFollowing.as_view()),
+    path('posts/following/', GetPostsOfFollowing.as_view()),
     path('posts/user/<int:user_id>', PostsByUser.as_view()),
 
     path('comments/<int:post_id>/', ListCreateComments.as_view()),
@@ -34,5 +35,8 @@ urlpatterns = [
     path('users/', GetAllUsers.as_view()),
     path('followers/toggle-follow/<int:user_id>/', FollowToggle.as_view()),
     path('followers/followers/', ListFollowers.as_view()),
-    path('followers/following/', ListFollowees.as_view())
+    path('followers/following/', ListFollowees.as_view()),
+
+    path('friends/request/<int:user_id>/', CreateFriendRequest.as_view()),
+    path('friends/requests/<int:friend_request_id>/', GetFriendRequest.as_view()),
 ]

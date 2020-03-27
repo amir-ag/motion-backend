@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from app.post.models import FriendRequest
+from app.social.models import FriendRequest
 from app.users.serializers import UserSerializer
 
 

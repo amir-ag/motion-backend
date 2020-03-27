@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.fields import SerializerMethodField
 
-from app.post.models.comment import Comment
+from app.social.models.comment import Comment
 from app.users.serializers import UserSerializer
 
 

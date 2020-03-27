@@ -1,12 +1,13 @@
 from django.contrib.auth import get_user_model
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, RetrieveAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 
-from app.post.models import FriendRequest
-from app.post.serializers.friendSerializer import FriendSerializer
+from app.social.models import FriendRequest
+from app.social.serializers.friendSerializer import FriendSerializer
 
 User = get_user_model()
 
+# Create a new friend request
 
 class CreateFriendRequest(CreateAPIView):
     """
@@ -23,4 +24,12 @@ class CreateFriendRequest(CreateAPIView):
         friendship = FriendRequest(requester=requester, receiver=receiver)
         friendship.save()
         return Response(self.get_serializer(instance=friendship).data)
+
+# get/update/delete a specific friend request
+
+
+class GetFriendRequest(RetrieveUpdateDestroyAPIView):
+    lookup_url_kwarg = 'friend_request_id'
+    queryset = FriendRequest.objects.all()
+    serializer_class = FriendSerializer
 
