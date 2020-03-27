@@ -39,8 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'fullurl',
 
     'rest_framework',
+    'app.emails',
     'app.users',
     'app.social',
 ]
@@ -72,6 +74,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'app.wsgi.application'
 

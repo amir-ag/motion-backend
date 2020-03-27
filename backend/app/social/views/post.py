@@ -2,10 +2,12 @@
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, GenericAPIView, ListAPIView
 from rest_framework.response import Response
 
-from app.social.models import Post
+from app.social.models import Post, Comment
+from app.social.serializers.CommentSerializer import CommentSerializer
 from app.social.serializers.PostSerializer import PostSerializer
 
 # Get all posts or create a new one
+
 
 class ListCreate(ListCreateAPIView):
     queryset = Post.objects.all()
@@ -73,6 +75,17 @@ class GetPostsOfFollowing(ListCreate):
 
 
 class ListCreateComments(ListCreateAPIView):
-    serializer_class = PostSerializer
     queryset = Post.objects.all()
+    serializer_class = CommentSerializer
     lookup_url_kwarg = 'post_id'
+
+    def list(self, request, *args, **kwargs):
+        post = self.get_object()
+        comments = post.comments
+        return Response(self.get_serializer(instance=comments, many=True).data)
+
+    def create(self, request, *args, **kwargs):
+        post = self.get_object()
+        comment = Comment(author=request.user, post=post, comment=request.data['comment'])
+        comment.save()
+        return Response(self.get_serializer(instance=comment).data)
