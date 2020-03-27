@@ -1,19 +1,20 @@
-from django.shortcuts import render
-
 # Create your views here.
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, GenericAPIView, ListAPIView
 from rest_framework.response import Response
 
-from app.post.models import Post
-from app.post.serializers import PostSerializer
+from app.social.models import Post
+from app.social.serializers.PostSerializer import PostSerializer
 
+# Get all posts or create a new one
 
 class ListCreate(ListCreateAPIView):
-    serializer_class = PostSerializer
     queryset = Post.objects.all()
+    serializer_class = PostSerializer
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+
+# Get, update or delete a specific post
 
 
 class RetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
@@ -21,6 +22,7 @@ class RetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     lookup_url_kwarg = 'post_id'
     queryset = Post.objects.filter()
 
+# Like or unlike a specific post
 
 class ToggleLike(GenericAPIView):
     serializer_class = PostSerializer
@@ -36,12 +38,17 @@ class ToggleLike(GenericAPIView):
         relevant_post.likes.add(user.id)
         return Response(self.get_serializer(instance=relevant_post).data)
 
+# Get liked posts of logged-in user
+
 
 class UserLikedPosts(ListAPIView):
     serializer_class = PostSerializer
 
     def get_queryset(self):
         return self.request.user.liked_posts
+
+
+# Get posts of a specific user
 
 
 class PostsByUser(ListAPIView):
@@ -52,9 +59,20 @@ class PostsByUser(ListAPIView):
         user = self.kwargs['user_id']
         return Post.objects.filter(author=user)
 
-class GetPostsofFollowing(ListCreate):
+# Get posts of people the logged-in user is following
+
+
+class GetPostsOfFollowing(ListCreate):
     serializer_class = PostSerializer
 
     def get_queryset(self):
         followed_user_ids = self.request.user.followees.all().values_list("id", flat=True)
         return Post.objects.filter(author__in=followed_user_ids)
+
+# Get all or create a comment on a specific post
+
+
+class ListCreateComments(ListCreateAPIView):
+    serializer_class = PostSerializer
+    queryset = Post.objects.all()
+    lookup_url_kwarg = 'post_id'

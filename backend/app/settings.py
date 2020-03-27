@@ -39,8 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'rest_framework',
     'app.users',
-    'app.post'
+    'app.social',
 ]
 
 MIDDLEWARE = [
@@ -138,10 +140,11 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=10),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=10)
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=9),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=9)
 }
 
