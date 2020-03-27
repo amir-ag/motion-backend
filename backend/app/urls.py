@@ -17,18 +17,15 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.documentation import include_docs_urls
-from rest_framework_simplejwt import views as jwt_views
 
 from app import settings
 
 urlpatterns = [
     path('', admin.site.urls),
     path('api/docs/', include_docs_urls(title='API Docs', public=False, permission_classes=[])),
-    path('api/token/', jwt_views.TokenObtainPairView.as_view()),
-    path('api/token/refresh/', jwt_views.TokenRefreshView.as_view()),
-    path('api/token/verify/', jwt_views.TokenVerifyView.as_view()),
     path('backend/api/social/', include('app.social.urls')),
-    path('backend/api/users/', include('app.users.urls'))
+    path('backend/api/users/', include('app.users.urls')),
+    path('backend/api/auth/', include('app.registration.urls')),
 ]
 
 if settings.DEBUG:

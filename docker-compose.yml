@@ -26,20 +26,19 @@ services:
       - ./media-files:/media-files
       - ./static-files:/static-files
 
-  services:
-    email:
-      image: "your_image"
-      restart: always
-      env_file:
-        - ./database.env
-      command: 'python manage.py send_mail'
-      volumes:
-        - ./backend:/backend
-        - ./media-files:/media-files
-        - ./static-files:/static-files
-      depends_on:
-        - postgres
-        - backend
+  email:
+    image: backend
+    restart: always
+    env_file:
+      - ./envs/dev.env
+    command: 'python manage.py send_email'
+    volumes:
+      - ./backend:/backend
+      - ./media-files:/media-files
+      - ./static-files:/static-files
+    depends_on:
+      - postgres
+      - backend
 
 
 
